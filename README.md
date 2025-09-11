@@ -23,4 +23,4 @@ I am going to use the required technologies in the following ways:
 
 ## Application Design  
 
-![Alt text](/Users/joshuachristensen/Documents/BYU/CS260/CS260/IMG_7154.jpg)
+![Alt text](IMG_7154.jpg)
