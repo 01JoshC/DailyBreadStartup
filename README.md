@@ -1,7 +1,7 @@
-# BiblePower
+# DailyBread
 
 ## Elevator Pitch  
-Studying the Bible every day isn’t always easy. That’s why we created **BiblePower**—a web application designed to help users grow spiritually through consistent scripture study. BiblePower motivates daily reading with a streak counter, leaderboards, league advancement, and other engaging gamified features. Think of it as the **“Duolingo” for the Bible**—making scripture study rewarding, interactive, and spiritually uplifting.  
+Studying the Bible every day isn’t always easy. That’s why we created **DailBread**—a web application designed to help users grow spiritually through consistent scripture study. DailyBread motivates daily reading with a streak counter, leaderboards, league advancement, and other engaging gamified features. Think of it as the **“Duolingo” for the Bible**—making scripture study rewarding, interactive, and spiritually uplifting.  
 
 ## Key Features  
 - Streak Counter  
