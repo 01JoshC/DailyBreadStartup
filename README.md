@@ -25,18 +25,22 @@ I am going to use the required technologies in the following ways:
 
 ![Alt text](IMG_7154.jpg)
 
-## Notes
-I have decided to change the name of the application from "BiblePower" to "DailyBread" to better reflect its purpose. The new name emphasizes daily scripture study and aligns well with the application's goal of helping users grow spiritually through consistent engagement with the Bible.
+## AWS Deliverable
+For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
+  - [x] **Server deployed and accessible with custom domain name** - [My server link](https://dailybread.click).
 
-I decided to base large amount of my code off of the Simon game code provided in class. This general layout and structure is very similar to what I want for my application, so it made sense to adapt it for my needs.
+## 🚀 HTML deliverable
+For this deliverable I did the following. I checked the box [x] and added a description for things I completed.
 
-I also have decided to remove the registered trademark symbol (®) from the application name "DailyBread" as it is not necessary for our non-commercial, educational project. This change simplifies the branding and avoids any potential legal implications associated with trademark usage.
-
-I have added a relevant Bible verse (Joshua 1:8) to the about page to inspire users and reinforce the spiritual purpose of the application. This addition aims to motivate users to engage with the app and emphasizes the importance of daily scripture study.
-
-I changed some basic elements such as the leaderboard, added a different image, changes the scriptures, and added a notification to the leaderboard page to inform users of their progress towards overtaking the next user on the leaderboard. This enhances user engagement and encourages friendly competition, and also would be implemented using a web socket to provide real-time updates.
-
-The actualy bible text will be retrieved using an API call to a free Bible API, such as the Bible API (https://bible-api.com/). This allows users to read scripture directly within the application without needing to store the text locally.
+  - [x] HTML pages - Four different pages. One for each view. index.html (Login), read.html, leaderboard.html, and about.html.
+  - [x] Proper HTML element usage - I spent a lot of time learning about elements. I used header, footer, main, nav, img, a, input, button, form, and many more.
+  - [x] Links - Links between views.
+  - [x] Text - About page has text.
+  - [x] 3rd party API placeholder - the read page will fetch bible text from a free bible API.
+  - [x] Images - Image of a bible is displayed on the about page.
+  - [x] Login placeholder - Placeholder for auth on the login page.
+  - [x] DB data placeholder - High scores displayed on scores page.
+  - [x] WebSocket placeholder - The play page has a text area that will show what 
 
 
 
