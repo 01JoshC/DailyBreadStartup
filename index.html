@@ -31,8 +31,6 @@
     <hr/>
     </header>
 
-
-
     <main>
         <div class="container-fluid">
           <div class="card">
@@ -40,29 +38,34 @@
           <div class="card-body">
           <form method="get" action="read.html">
             <div>
-              <span>@</span>
-              <input type="text" placeholder="your@email.com" />
+              <label class="form-label"for="email">Email:</label>
+              <input class="form-control" type="text" placeholder="your@email.com" />
             </div>
             <div>
-              <span>🔒</span>
-              <input type="password" placeholder="password" />
+              <label class="form-label"for="password">Password:</label>
+              <input class="form-control" type="password" placeholder="password" />
             </div>
-            <button type="submit">Login</button>
-            <button type="submit">Create</button>
+            <div class="container-fluid text-center">
+              <button type="submit" class="btn btn-light">Login</button>
+              <button type="submit" class="btn btn-light">Create</button>
+            </div>
           </form>
-          <hr />
-            <p>"It is written: ‘Man shall not live on bread alone, but on every word that comes from the mouth of God.’"</p>
-            <p>Matthew 4:4</p>
+          <hr/>
+            <p class="text-center">"It is written: ‘Man shall not live on bread alone, but on every word that comes from the mouth of God.’"</p>
+            <p class="text-center">Matthew 4:4</p>
+            </div>
           </div>
         </div>
       </div>
     </main>
 
     <footer>
-      <hr />
-      <span class="text-reset">Joshua Christensen</span>
-      <br />
-      <a href="https://github.com/01JoshC/BiblePowerStartup.git">GitHub</a>
+      <hr/>
+      <div class="container-fluid text-center">
+        <span class="text-center text-reset">Joshua Christensen</span>
+        <br />
+        <a href="https://github.com/01JoshC/BiblePowerStartup.git">GitHub</a>
+      </div>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
   </body>
