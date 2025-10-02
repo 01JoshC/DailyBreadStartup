@@ -42,6 +42,17 @@ For this deliverable I did the following. I checked the box [x] and added a desc
   - [x] DB data placeholder - High scores displayed on scores page.
   - [x] WebSocket placeholder - The play page has a text area that will show what 
 
+## CSS deliverable
+
+For this deliverable I properly styled the application into its final appearance.
+
+- [x] **Header, footer, and main content body**
+- [x] **Navigation elements** - I used bootstreap to make the nav bar much more appealing with the links right aligned and the logo built into it. 
+- [x] **Responsive to window resizing** - My app looks great on all window sizes and devices. I wish I could have done a little more with this, but I am happy with how it turned out.
+- [x] **Application elements** - I used the boostrap theme, and am happy with how the colors turned out. I added a table and used the table alert class and card class for styling. I also added styling to the form elements and relavent buttons. 
+- [x] **Application text content** - Consistent fonts. Again, this comes from the boostrap themes. 
+- [x] **Application images** - I centered and rounded the image on the about page. I think it looks nice. 
+
 
 
 
