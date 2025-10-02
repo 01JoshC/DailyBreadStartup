@@ -6,39 +6,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Simon</title>
     <link rel="icon" href="favicon.ico" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
   </head>
   <body>
     <!-- Use header, main, and footer elements to give semantic structure -->
     <header>
-      <h1>&#x1F956; Daily Bread &#x1F956;</h1>
-
       <!-- Navigation elements -->
-      <nav>
-        <!-- Menu is a semantic alternative to <ul> that represents an interaction -->
-        <menu>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="read.html">Read</a></li>
-          <li><a href="leaderboard.html">Leaderboard</a></li>
-          <li><a href="about.html">About</a></li>
-        </menu>
+      <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+           <h1 class="navbar-brand">&#x1F956; Daily Bread </h1>
+            <!-- Menu is a semantic alternative to <ul> that represents an interaction -->
+            <menu>
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="read.html">Read</a></li>
+                <li class="nav-item"><a class="nav-link" href="leaderboard.html">Leaderboard</a></li>
+                <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+              </ul>
+            </menu>
+        </div>
       </nav>
 
       <!-- Since we don't have the ability to style we use old style HTML to give some visual formatting -->
-      <hr />
+    <hr/>
     </header>
 
     <main>
+      <div class="container-fluid px-7">
         <h1>Genesis 1</h1>
         <p>1 In the beginning God created the heaven and the earth.</p>
         <p>2 And the earth was without form, and void; and darkness was upon the face of the deep. And the Spirit of God moved upon the face of the waters.</p>
         <p>3 And God said, Let there be light: and there was light.</p>
+      </div>
     </main>
 
     <footer>
-      <hr />
-      <span class="text-reset">Joshua Christensen</span>
-      <br />
-      <a href="https://github.com/01JoshC/BiblePowerStartup.git">GitHub</a>
+      <hr/>
+      <div class="container-fluid text-center">
+        <span class="text-center text-reset">Joshua Christensen</span>
+        <br />
+        <a href="https://github.com/01JoshC/BiblePowerStartup.git">GitHub</a>
+      </div>
     </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
   </body>
 </html>
