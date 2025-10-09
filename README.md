@@ -53,6 +53,12 @@ For this deliverable I properly styled the application into its final appearance
 - [x] **Application text content** - Consistent fonts. Again, this comes from the boostrap themes. 
 - [x] **Application images** - I centered and rounded the image on the about page. I think it looks nice. 
 
+## React deliverable
+- [x] **Bundled using Vite** Vite is installed in my project and I am using it to bundle my React code.
+- [x] **Multiple React components** My leaderboard, login, about, and read pages are delivered using React. This is clealry visible in the project URL where the .html extension is absent. I changed several componets to use React bootstrap components.
+- [x] **React router** I am using React Router to handle navigation between the different views.
+
+
 
 
 
