@@ -1,0 +1,32 @@
+{
+  "name": "dailybreadstartup",
+  "version": "1.0.0",
+  "description": "## Elevator Pitch   Studying the Bible every day isn’t always easy. That’s why we created **DailBread**—a web application designed to help users grow spiritually through consistent scripture study. DailyBread motivates daily reading with a streak counter, leaderboards, league advancement, and other engaging gamified features. Think of it as the **“Duolingo” for the Bible**—making scripture study rewarding, interactive, and spiritually uplifting.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/01JoshC/CS260.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/01JoshC/CS260/issues"
+  },
+  "homepage": "https://github.com/01JoshC/CS260#readme",
+  "devDependencies": {
+    "vite": "^7.1.9"
+  },
+  "dependencies": {
+    "bootstrap": "^5.3.8",
+    "react": "^19.2.0",
+    "react-bootstrap": "^2.10.10",
+    "react-dom": "^19.2.0",
+    "react-router-dom": "^7.9.4"
+  }
+}
