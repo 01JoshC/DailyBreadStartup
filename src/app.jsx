@@ -29,8 +29,6 @@ export default function App() {
                 <hr/>
             </header>
 
-             <main>App components go here</main>
-
             <Routes>
                 <Route path='/' element={<Login />} exact />
                 <Route path='/read' element={<Read />} />
