@@ -58,6 +58,11 @@ For this deliverable I properly styled the application into its final appearance
 - [x] **Multiple React components** My leaderboard, login, about, and read pages are delivered using React. This is clealry visible in the project URL where the .html extension is absent. I changed several componets to use React bootstrap components.
 - [x] **React router** I am using React Router to handle navigation between the different views.
 
+## React deliverable
+- [x] **React useState and useEffect hooks** I am using useState and useEffect in several components. The login component uses useState to manage the userName and authState. The read component uses useEffect to fetch bible text from an API when the component mounts.
+- [x] **Multiple react components that implement or mock all app functionality** My login component handles login, logout, and register functionality. The read component displays bible text. The leaderboard component displays high scores. The about component provides information about the app.
+
+
 
 
 
