@@ -4,6 +4,8 @@ import Alert from 'react-bootstrap/Alert';
 
 export function Leaderboard() {
   const [scores, setScores] = React.useState([]);
+  const [messageScore, setMessageScore] = React.useState("10");
+  const [messageUserName, setMessageUserName] = React.useState("Samuel");
 
   React.useEffect(() => {
       const scoresText = localStorage.getItem('scores');
@@ -12,6 +14,22 @@ export function Leaderboard() {
       }
     }, []);
 
+  function setTopNameAndScore(){
+    const names = ["Adam", "Noah", "Enoch", "Job", "Joshua", "Moses", "Obidiah", "David", "Solomon", "Isaiah"];
+    const score = Math.floor(Math.random() * 3000);
+    const userName = names[Math.floor(Math.random() * names.length)];
+    return [score, userName]
+  }
+  
+  setInterval(() => {
+      const values = setTopNameAndScore()
+      const score = values[0]
+      const userName = values[1]
+      setMessageUserName(userName)
+      setMessageScore(score)
+  }, 5000);
+
+
   const scoreRows = [];
   if (scores.length) {
     for (const [i, score] of scores.entries()) {
@@ -19,7 +37,8 @@ export function Leaderboard() {
         <tr key={i}>
           <td>{i}</td>
           <td>{score.name.split('@')[0]}</td>
-          <td>{score.score}</td>
+          <td>{score.xp}</td>
+          <td>{score.streak}</td>
           <td>{score.date}</td>
         </tr>
       );
@@ -36,7 +55,7 @@ export function Leaderboard() {
     <main>
     <div className="container-fluid">
     <br />
-    <Alert variant="warning" className="mx-auto text-center">User, you are 10XP from overtaking Moses!</Alert>
+    <Alert variant="warning" className="mx-auto text-center">User, you are {messageScore}XP from overtaking {messageUserName}!</Alert>
     <br />
       <table className="table">
         <thead>
