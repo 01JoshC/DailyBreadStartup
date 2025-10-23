@@ -3,6 +3,35 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Alert from 'react-bootstrap/Alert';
 
 export function Leaderboard() {
+  const [scores, setScores] = React.useState([]);
+
+  React.useEffect(() => {
+      const scoresText = localStorage.getItem('scores');
+      if (scoresText) {
+        setScores(JSON.parse(scoresText));
+      }
+    }, []);
+
+  const scoreRows = [];
+  if (scores.length) {
+    for (const [i, score] of scores.entries()) {
+      scoreRows.push(
+        <tr key={i}>
+          <td>{i}</td>
+          <td>{score.name.split('@')[0]}</td>
+          <td>{score.score}</td>
+          <td>{score.date}</td>
+        </tr>
+      );
+    }
+  } else {
+    scoreRows.push(
+      <tr key='0'>
+        <td colSpan='4'>Be the first to score</td>
+      </tr>
+    );
+  }
+
   return (
     <main>
     <div className="container-fluid">
@@ -19,29 +48,7 @@ export function Leaderboard() {
             <th>Date</th>
           </tr>
         </thead>
-        <tbody>
-          <tr>
-            <td>1</td>
-            <td>Obadiah</td>
-            <td>34</td>
-            <td>3</td>
-            <td>May 20, 2021</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>Moses</td>
-            <td>29</td>
-            <td>2</td>
-            <td>June 2, 2021</td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>Noah</td>
-            <td>7</td>
-            <td>1</td>
-            <td>July 3, 2020</td>
-          </tr>
-        </tbody>
+        <tbody> {scoreRows} </tbody>
       </table>
       </div>
     </main>
