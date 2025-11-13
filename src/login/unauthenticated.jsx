@@ -36,8 +36,8 @@ export function Unauthenticated(props) {
               <input className="form-control" type="password" placeholder="password" onChange={(e) => setPassword(e.target.value)}/>
             </div>
             <div className="container-fluid text-center">
-              <Button type="submit" variant="light" onClick={() => loginOrCreate('/api/auth/login')} disabled={!userName || !password} >Login</Button>
-              <Button type="submit" variant="light" onClick={() => loginOrCreate('/api/auth/create')} disabled={!userName || !password}>Create</Button>
+              <Button type="button" variant="light" onClick={() => loginOrCreate('/api/auth/login')} disabled={!userName || !password} >Login</Button>
+              <Button type="button" variant="light" onClick={() => loginOrCreate('/api/auth/create')} disabled={!userName || !password}>Create</Button>
             </div>
         </form> 
     </div>
