@@ -6,14 +6,21 @@ export function Unauthenticated(props) {
   const [userName, setUserName] = React.useState(props.userName);
   const [password, setPassword] = React.useState('');
 
-  async function loginUser() {
-    localStorage.setItem('userName', userName);
-    props.onLogin(userName);
-  }
-
-  async function createUser() {
-    localStorage.setItem('userName', userName);
-    props.onLogin(userName);
+  async function loginOrCreate(endpoint) {
+    const response = await fetch(endpoint, {
+      method: 'post',
+      body: JSON.stringify({ email: userName, password: password }),
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8',
+      },
+    });
+    if (response?.status === 200) {
+      localStorage.setItem('userName', userName);
+      props.onLogin(userName);
+    } else {
+      const body = await response.json();
+      setDisplayError(`⚠ Error: ${body.msg}`);
+    }
   }
 
   return (
@@ -29,8 +36,8 @@ export function Unauthenticated(props) {
               <input className="form-control" type="password" placeholder="password" onChange={(e) => setPassword(e.target.value)}/>
             </div>
             <div className="container-fluid text-center">
-              <Button type="submit" variant="light" onClick={() => loginUser()} disabled={!userName || !password} >Login</Button>
-              <Button type="submit" variant="light" onClick={() => createUser()} disabled={!userName || !password}>Create</Button>
+              <Button type="submit" variant="light" onClick={() => loginOrCreate('/api/auth/login')} disabled={!userName || !password} >Login</Button>
+              <Button type="submit" variant="light" onClick={() => loginOrCreate('/api/auth/create')} disabled={!userName || !password}>Create</Button>
             </div>
         </form> 
     </div>
