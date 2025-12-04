@@ -62,6 +62,13 @@ For this deliverable I properly styled the application into its final appearance
 - [x] **React useState and useEffect hooks** I am using useState and useEffect in several components. The login component uses useState to manage the userName and authState. The read component uses useEffect to fetch bible text from an API when the component mounts.
 - [x] **Multiple react components that implement or mock all app functionality** My login component handles login, logout, and register functionality. The read component displays bible text. The leaderboard component displays high scores. The about component provides information about the app.
 
+## Service deliverable
+- [x] **Frontend served up using Express static middleware** I am using express static middleware to serve up my React frontend from the service.
+- [x] **Your frontend calls third party service endpoints** The read component fetches bible text from a free bible API.
+- [x] **Your backend provides service endpoints** The service provides endpoints for authentication, progress tracking, and scores.
+- [x] **Your frontend calls your service endpoints** The frontend calls the service endpoints for authentication, progress tracking, and scores.
+- [x] **Supports registration, login, logout, and restricted endpoint** The service supports user registration, login, logout, and has restricted endpoints that require authentication.
+
 
 
 
