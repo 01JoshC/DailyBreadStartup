@@ -1,6 +1,6 @@
 const GameEvent = {
   System: 'system',
-  End: 'gameEnd',
+  Finished: 'gameFinished',
   Start: 'gameStart',
 };
 
@@ -17,7 +17,8 @@ class GameEventNotifier {
   handlers = [];
 
   constructor() {
-    let port = window.location.port;
+    let port = 4000;
+    //window.location.port;
     const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
     this.socket = new WebSocket(`${protocol}://${window.location.hostname}:${port}/ws`);
     this.socket.onopen = (event) => {

@@ -1,10 +1,11 @@
 import React from 'react';
 import { GameEvent, GameNotifier } from './gameNotifier';
 
-export function Read_c() {
+export function Read_c(props) {
   const [displayText, setDisplayText] = React.useState([]);
   const [displayChapter, setDisplayChapter] = React.useState('');
   const [displayBook, setDisplayBook] = React.useState('');
+  const userName = props.userName;
 
   //reformats api return object to be just verses
   function getVerses(chapter_data) {
@@ -25,15 +26,16 @@ export function Read_c() {
   }
 
   React.useEffect(() => {
-    // fetch("https://startup.dailybread.click/api/progress")
+    // fetch("https://startup.dailybread.click/api/progress")    
     fetch("http://localhost:4000/api/progress")
     .then((response) => response.json())
     .then((data) => {
       setDisplayBook(data["book"])
       setDisplayChapter(parseInt(data["chapter"]))
       getText(data["book"], data["chapter"])
-    })
-    }, []);
+
+    GameNotifier.broadcastEvent(userName, GameEvent.Start, `${data["book"]} ${data["chapter"]}`);
+    })}, []);
 
   //this is what enables the "next" button to work
   function increment(){ 
@@ -207,6 +209,8 @@ export function Read_c() {
       .then(response => response.json())
       .then(data => {
       console.log(data);
+
+      GameNotifier.broadcastEvent(userName, GameEvent.Finished, `${data["book"]} ${data["chapter"]}`);
     })
   }
 

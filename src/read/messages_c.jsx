@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { GameEvent, GameNotifier } from './gameNotifier';
 
 export function Messages_c(props) {
@@ -23,12 +22,10 @@ export function Messages_c(props) {
     const messageArray = [];
     for (const [i, event] of events.entries()) {
       let message = 'unknown';
-      if (event.type === GameEvent.End) {
-        message = `scored ${event.value.score}`;
+      if (event.type === GameEvent.Finished) {
+        message = `Nourished their soul by reading ${event.value}`;
       } else if (event.type === GameEvent.Start) {
-        message = `started a new game`;
-      } else if (event.type === GameEvent.System) {
-        message = event.value.msg;
+        message = `Began nourishing their soul by reading ${event.value}`;
       }
 
       messageArray.push(
