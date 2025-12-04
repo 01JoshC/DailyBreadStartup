@@ -69,6 +69,12 @@ For this deliverable I properly styled the application into its final appearance
 - [x] **Your frontend calls your service endpoints** The frontend calls the service endpoints for authentication, progress tracking, and scores.
 - [x] **Supports registration, login, logout, and restricted endpoint** The service supports user registration, login, logout, and has restricted endpoints that require authentication.
 
+## Websocket deliverable
+- [x] **Backend listens for WebSocket connection** The backend uses the 'ws' library to listen for WebSocket connections.
+- [x] **Frontend makes WebSocket connection** The frontend uses the WebSocket API to connect to the backend WebSocket server.
+- [x] **Data sent over WebSocket connection** The backend sends notification messages to the frontend over the WebSocket connection.
+- [x] **WebSocket data displayed in the application interface** The frontend displays notification messages received over the WebSocket connection.
+- [x] **The application is fully functional. There are no mocks or placeholder features.** The application is fully functional with all features implemented. 
 
 
 
