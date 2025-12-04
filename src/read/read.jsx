@@ -1,48 +1,40 @@
 import React from 'react';
 
 export function Read() {
-  const [displayText, setDisplayText] = React.useState('');
+  const [displayText, setDisplayText] = React.useState([]);
   const [displayChapter, setDisplayChapter] = React.useState('');
   const [displayBook, setDisplayBook] = React.useState('');
 
-
-  function makeParagraphs(text){
-    const verses = text["verses"];
-    let fullText = "";
-    for (let i = 0; i < verses.length; i++){
-      fullText += verses[i]["verse"] + " " + verses[i]["text"] + " ";
-
-    
+  //reformats api return object to be just verses
+  function getVerses(chapter_data) {
+    const verses = [];
+    for (let i = 0; i < chapter_data["data"].length; i++) {
+      verses.push(chapter_data["data"][i]["text"])
     }
+    return verses  
+  }
 
-  //database pretending
+  //our third-part api call
   function getText(book, chapter){
     fetch(
       `https://cdn.jsdelivr.net/gh/wldeh/bible-api/bibles/en-kjv/books/${book}/chapters/${chapter}.json`
-
-      //https://cdn.jsdelivr.net/gh/wldeh/bible-api/bibles/${version}/books/${book}/chapters/${chapter}.json
     )
       .then((response) => response.json())
-      .then((data) => console.log(data));
+      .then((data) => setDisplayText(getVerses(data)));
   }
 
-
-  const currentChapter = "currentChapter";
-  const currentBook = "currentBook";
-
   React.useEffect(() => {
- 
     fetch("http://localhost:4000/api/progress")
     .then((response) => response.json())
     .then((data) => {
       setDisplayBook(data["book"])
       setDisplayChapter(parseInt(data["chapter"]))
-      setDisplayText(getText(data["book"], data["chapter"]))
+      getText(data["book"], data["chapter"])
     })
     }, []);
 
+  //this is what enables the "next" button to work
   function increment(){ 
-
     const bibleChapterCounts = {
         // Old Testament
         "genesis": 50,
@@ -188,42 +180,44 @@ export function Read() {
     ];
 
     setDisplayChapter(displayChapter+1)
-
+    
     if (displayChapter > bibleChapterCounts[displayBook]){
-
       for (let i = 0; i < bibleBooks.length; i++){
         if (bibleBooks[i] == displayBook){
-
           setDisplayBook(bibleBooks[i+1])
           break
         }
       }
       setDisplayChapter(1)
-
-
-
     }
-    setDisplayText(getText(displayBook, displayChapter))
+    
+    getText(displayBook, displayChapter)
 
     fetch("http://localhost:4000/api/progress", {
-            method: 'post', 
-            body: JSON.stringify({
-              book: displayBook,
-              chapter: displayChapter
-          })})
-          .then(response => response.json())
-          .then(data => {
-            console.log(data);
-          })
-
+      method: 'post', 
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        book: displayBook,
+        chapter: displayChapter
+      })})
+      .then(response => response.json())
+      .then(data => {
+      console.log(data);
+    })
   }
 
-
+  //component html
   return (
      <main>
       <div className="container-fluid px-7">
-        <h1>{displayBook} {displayChapter}</h1>
-        <p>{displayText}</p>
+        <h1><strong>{displayBook.toUpperCase()} {displayChapter}</strong></h1>
+        <ol>
+          {displayText.map((text, index) => (
+            <li key={index}>{text}</li>
+          ))}
+        </ol>
       </div>
     <button type="button" class="btn btn-secondary" onClick={() => increment()}>Next Chapter &#10145;</button>
     </main>

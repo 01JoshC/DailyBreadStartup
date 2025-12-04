@@ -90,7 +90,7 @@ apiRouter.post('/score', verifyAuth, (req, res) => {
 });
 
 apiRouter.get('/progress', (_req, res) => {
-  res.send({book : curr_book, chapter: curr_chapter});
+  res.send({book: curr_book, chapter: curr_chapter});
 });
 
 apiRouter.post('/progress', (_req, res) => {
