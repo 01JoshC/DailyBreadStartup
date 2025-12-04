@@ -210,7 +210,7 @@ export function Read_c(props) {
       .then(data => {
       console.log(data);
 
-      GameNotifier.broadcastEvent(userName, GameEvent.Finished, `${data["book"]} ${data["chapter"]}`);
+      GameNotifier.broadcastEvent(userName, GameEvent.Finished, `${displayBook} ${displayChapter}`);
     })
   }
 

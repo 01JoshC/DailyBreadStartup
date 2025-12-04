@@ -23,9 +23,9 @@ export function Messages_c(props) {
     for (const [i, event] of events.entries()) {
       let message = 'unknown';
       if (event.type === GameEvent.Finished) {
-        message = `Nourished their soul by reading ${event.value}`;
+        message = `: nourished their soul by reading ${event.value}`;
       } else if (event.type === GameEvent.Start) {
-        message = `Began nourishing their soul by reading ${event.value}`;
+        message = `: began nourishing their soul by reading ${event.value}`;
       }
 
       messageArray.push(
