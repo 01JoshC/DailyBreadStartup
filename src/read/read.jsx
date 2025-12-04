@@ -5,13 +5,25 @@ export function Read() {
   const [displayChapter, setDisplayChapter] = React.useState('');
   const [displayBook, setDisplayBook] = React.useState('');
 
+
+  function makeParagraphs(text){
+    const verses = text["verses"];
+    let fullText = "";
+    for (let i = 0; i < verses.length; i++){
+      fullText += verses[i]["verse"] + " " + verses[i]["text"] + " ";
+
+    
+    }
+
   //database pretending
   function getText(book, chapter){
     fetch(
-      `https://cdn.jsdelivr.net/gh/wldeh/bible-api/bibles/en-asv/books/${book}/chapters/${chapter}/verses/1.json`
+      `https://cdn.jsdelivr.net/gh/wldeh/bible-api/bibles/en-kjv/books/${book}/chapters/${chapter}.json`
+
+      //https://cdn.jsdelivr.net/gh/wldeh/bible-api/bibles/${version}/books/${book}/chapters/${chapter}.json
     )
       .then((response) => response.json())
-      .then((data) => console.log(data.text));
+      .then((data) => console.log(data));
   }
 
 
@@ -19,98 +31,191 @@ export function Read() {
   const currentBook = "currentBook";
 
   React.useEffect(() => {
-    if (!localStorage.getItem(currentChapter)){
-      localStorage.setItem(currentChapter, "1")
-      }
-
-    if (!localStorage.getItem(currentBook)){
-      localStorage.setItem(currentBook, "Genesis")
-      }
-
-    setDisplayBook(localStorage.getItem(currentBook))
-    setDisplayChapter(localStorage.getItem(currentChapter))
-    setDisplayText("1 In the beginning God created the heaven and the earth.")
+ 
+    fetch("http://localhost:4000/api/progress")
+    .then((response) => response.json())
+    .then((data) => {
+      setDisplayBook(data["book"])
+      setDisplayChapter(parseInt(data["chapter"]))
+      setDisplayText(getText(data["book"], data["chapter"]))
+    })
     }, []);
 
   function increment(){ 
 
     const bibleChapterCounts = {
-  // Old Testament
-  "Genesis": 50,
-  "Exodus": 40,
-  "Leviticus": 27,
-  "Numbers": 36,
-  "Deuteronomy": 34,
-  "Joshua": 24,
-  "Judges": 21,
-  "Ruth": 4,
-  "1 Samuel": 31,
-  "2 Samuel": 24,
-  "1 Kings": 22,
-  "2 Kings": 25,
-  "1 Chronicles": 29,
-  "2 Chronicles": 36,
-  "Ezra": 10,
-  "Nehemiah": 13,
-  "Esther": 10,
-  "Job": 42,
-  "Psalms": 150,
-  "Proverbs": 31,
-  "Ecclesiastes": 12,
-  "Song of Solomon": 8,
-  "Isaiah": 66,
-  "Jeremiah": 52,
-  "Lamentations": 5,
-  "Ezekiel": 48,
-  "Daniel": 12,
-  "Hosea": 14,
-  "Joel": 3,
-  "Amos": 9,
-  "Obadiah": 1,
-  "Jonah": 4,
-  "Micah": 7,
-  "Nahum": 3,
-  "Habakkuk": 3,
-  "Zephaniah": 3,
-  "Haggai": 2,
-  "Zechariah": 14,
-  "Malachi": 4,
-  
-  // New Testament
-  "Matthew": 28,
-  "Mark": 16,
-  "Luke": 24,
-  "John": 21,
-  "Acts": 28,
-  "Romans": 16,
-  "1 Corinthians": 16,
-  "2 Corinthians": 13,
-  "Galatians": 6,
-  "Ephesians": 6,
-  "Philippians": 4,
-  "Colossians": 4,
-  "1 Thessalonians": 5,
-  "2 Thessalonians": 3,
-  "1 Timothy": 6,
-  "2 Timothy": 4,
-  "Titus": 3,
-  "Philemon": 1,
-  "Hebrews": 13,
-  "James": 5,
-  "1 Peter": 5,
-  "2 Peter": 3,
-  "1 John": 5,
-  "2 John": 1,
-  "3 John": 1,
-  "Jude": 1,
-  "Revelation": 22
-};
+        // Old Testament
+        "genesis": 50,
+        "exodus": 40,
+        "leviticus": 27,
+        "numbers": 36,
+        "deuteronomy": 34,
+        "joshua": 24,
+        "judges": 21,
+        "ruth": 4,
+        "1 samuel": 31,
+        "2 samuel": 24,
+        "1 kings": 22,
+        "2 kings": 25,
+        "1 chronicles": 29,
+        "2 chronicles": 36,
+        "ezra": 10,
+        "nehemiah": 13,
+        "esther": 10,
+        "job": 42,
+        "psalms": 150,
+        "proverbs": 31,
+        "ecclesiastes": 12,
+        "song of solomon": 8,
+        "isaiah": 66,
+        "jeremiah": 52,
+        "lamentations": 5,
+        "ezekiel": 48,
+        "daniel": 12,
+        "hosea": 14,
+        "joel": 3,
+        "amos": 9,
+        "obadiah": 1,
+        "jonah": 4,
+        "micah": 7,
+        "nahum": 3,
+        "habakkuk": 3,
+        "zephaniah": 3,
+        "haggai": 2,
+        "zechariah": 14,
+        "malachi": 4,
+        
+        // New Testament
+        "matthew": 28,
+        "mark": 16,
+        "luke": 24,
+        "john": 21,
+        "acts": 28,
+        "romans": 16,
+        "1 corinthians": 16,
+        "2 corinthians": 13,
+        "galatians": 6,
+        "ephesians": 6,
+        "philippians": 4,
+        "colossians": 4,
+        "1 thessalonians": 5,
+        "2 thessalonians": 3,
+        "1 timothy": 6,
+        "2 timothy": 4,
+        "titus": 3,
+        "philemon": 1,
+        "hebrews": 13,
+        "james": 5,
+        "1 peter": 5,
+        "2 peter": 3,
+        "1 john": 5,
+        "2 john": 1,
+        "3 john": 1,
+        "jude": 1,
+        "revelation": 22
+    };
+
+    const bibleBooks = [
+      // Old Testament
+      "Genesis",
+      "Exodus",
+      "Leviticus",
+      "Numbers",
+      "Deuteronomy",
+      "Joshua",
+      "Judges",
+      "Ruth",
+      "1 Samuel",
+      "2 Samuel",
+      "1 Kings",
+      "2 Kings",
+      "1 Chronicles",
+      "2 Chronicles",
+      "Ezra",
+      "Nehemiah",
+      "Esther",
+      "Job",
+      "Psalms",
+      "Proverbs",
+      "Ecclesiastes",
+      "Song of Solomon",
+      "Isaiah",
+      "Jeremiah",
+      "Lamentations",
+      "Ezekiel",
+      "Daniel",
+      "Hosea",
+      "Joel",
+      "Amos",
+      "Obadiah",
+      "Jonah",
+      "Micah",
+      "Nahum",
+      "Habakkuk",
+      "Zephaniah",
+      "Haggai",
+      "Zechariah",
+      "Malachi",
+      
+      // New Testament
+      "Matthew",
+      "Mark",
+      "Luke",
+      "John",
+      "Acts",
+      "Romans",
+      "1 Corinthians",
+      "2 Corinthians",
+      "Galatians",
+      "Ephesians",
+      "Philippians",
+      "Colossians",
+      "1 Thessalonians",
+      "2 Thessalonians",
+      "1 Timothy",
+      "2 Timothy",
+      "Titus",
+      "Philemon",
+      "Hebrews",
+      "James",
+      "1 Peter",
+      "2 Peter",
+      "1 John",
+      "2 John",
+      "3 John",
+      "Jude",
+      "Revelation"
+    ];
 
     setDisplayChapter(displayChapter+1)
-    setDisplayBook(displayBook+1)
-   
 
+    if (displayChapter > bibleChapterCounts[displayBook]){
+
+      for (let i = 0; i < bibleBooks.length; i++){
+        if (bibleBooks[i] == displayBook){
+
+          setDisplayBook(bibleBooks[i+1])
+          break
+        }
+      }
+      setDisplayChapter(1)
+
+
+
+    }
     setDisplayText(getText(displayBook, displayChapter))
+
+    fetch("http://localhost:4000/api/progress", {
+            method: 'post', 
+            body: JSON.stringify({
+              book: displayBook,
+              chapter: displayChapter
+          })})
+          .then(response => response.json())
+          .then(data => {
+            console.log(data);
+          })
+
   }
 
 

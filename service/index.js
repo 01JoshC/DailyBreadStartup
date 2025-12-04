@@ -3,12 +3,15 @@ const bcrypt = require('bcryptjs');
 const express = require('express');
 const uuid = require('uuid');
 const app = express();
+const cors = require('cors');
 
 const authCookieName = 'token';
 
 // The scores and users are saved in memory and disappear whenever the service is restarted.
 let users = [];
 let scores = [];
+let curr_book = "exodus";
+let curr_chapter = 22;
 
 // The service port. In production the front-end code is statically hosted by the service on the same port.
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
@@ -18,6 +21,9 @@ app.use(express.json());
 
 // Use the cookie parser middleware for tracking authentication tokens
 app.use(cookieParser());
+
+// Allows use of my third party API to be in compliance with CORS
+app.use(cors());
 
 // Serve up the front-end static content hosting
 app.use(express.static('public'));
@@ -83,7 +89,15 @@ apiRouter.post('/score', verifyAuth, (req, res) => {
   res.send(scores);
 });
 
+apiRouter.get('/progress', (_req, res) => {
+  res.send({book : curr_book, chapter: curr_chapter});
+});
 
+apiRouter.post('/progress', (_req, res) => {
+  curr_chapter = _req.body.chapter;
+  curr_book = _req.body.book;
+  res.status(201).send({result : "updated"})
+});
 
 // Default error handler
 app.use(function (err, req, res, next) {
