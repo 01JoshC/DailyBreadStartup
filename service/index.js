@@ -81,7 +81,7 @@ const verifyAuth = async (req, res, next) => {
 };
 
 // Get High Streaks
-apiRouter.get('/streaks', verifyAuth, async (_req, res) => {
+apiRouter.get('/streaks', async (_req, res) => {
   const streaks = await DB.getHighStreaks(); //not sure suere this getHighScores function is yet
   res.send(streaks);
 });
@@ -99,8 +99,8 @@ apiRouter.post('/progress', (_req, res) => {
   res.status(201).send({result : "updated"})
 });
 
-apiRouter.get('/streak', verifyAuth, async (_req, res) => {
-  let streak = await DB.getStreak(_req.body.email)
+apiRouter.get('/streak', async (_req, res) => {
+  let streak = await DB.getStreak(_req.query.email)
   res.send({"streak": streak})
 })
 

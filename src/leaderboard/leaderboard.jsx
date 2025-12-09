@@ -9,10 +9,10 @@ export function Leaderboard(props) {
 
   React.useEffect(() => {
     //get the high streaks for the table
-    fetch('/api/highStreaks')
+    fetch('http://localhost:4000/api/streaks')
     .then((response) => response.json())
-    .then((streaks) => {
-      setStreaks(streaks);
+    .then((db_streaks) => {
+      setStreaks(db_streaks);
     });
 
     //get the user streak
@@ -31,7 +31,7 @@ export function Leaderboard(props) {
       streakRows.push(
         <tr key={i}>
           <td>{i}</td>
-          <td>{streak.name.split('@')[0]}</td>
+          <td>{streak.email.split('@')[0]}</td>
           <td>{streak.streak}</td>
         </tr>
       );
@@ -57,7 +57,7 @@ export function Leaderboard(props) {
             <th>Streak</th>
           </tr>
         </thead>
-        <tbody> {streakRows} </tbody>
+        <tbody>{streakRows}</tbody>
       </table>
       </div>
     </main>
