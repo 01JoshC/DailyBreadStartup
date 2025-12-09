@@ -14,22 +14,6 @@ export function Leaderboard() {
       }
     }, []);
 
-  function setTopNameAndScore(){
-    const names = ["Adam", "Noah", "Enoch", "Job", "Joshua", "Moses", "Obidiah", "David", "Solomon", "Isaiah"];
-    const score = Math.floor(Math.random() * 3000);
-    const userName = names[Math.floor(Math.random() * names.length)];
-    return [score, userName]
-  }
-  
-  setInterval(() => {
-      const values = setTopNameAndScore()
-      const score = values[0]
-      const userName = values[1]
-      setMessageUserName(userName)
-      setMessageScore(score)
-  }, 5000);
-
-
   const scoreRows = [];
   if (scores.length) {
     for (const [i, score] of scores.entries()) {
