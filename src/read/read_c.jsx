@@ -6,6 +6,8 @@ export function Read_c(props) {
   const [displayChapter, setDisplayChapter] = React.useState('');
   const [displayBook, setDisplayBook] = React.useState('');
   const userName = props.userName;
+  const [modalDisplay, setModalDisplay] = React.useState('');
+  const [modalMessage, setModalMessage] = React.useState('');
 
   //reformats api return object to be just verses
   function getVerses(chapter_data) {
@@ -45,7 +47,8 @@ export function Read_c(props) {
     })}, []);
 
   //this is what enables the "next" button to work
-  function increment(){ 
+  async function increment(){ 
+
     const bibleChapterCounts = {
         // Old Testament
         "genesis": 50,
@@ -220,12 +223,28 @@ export function Read_c(props) {
 
       GameNotifier.broadcastEvent(userName, GameEvent.Finished, `${displayBook} ${displayChapter}`);
     })
+
+    const response = await fetch("localhost:4000/api/streak", {
+      method: 'post', 
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        "email": userName
+      })})
+
+    if (response.status === 201) {
+      const data = await response.json()
+      setModalDisplay("block")
+      setModalMessage(`${data.message} ${data.streak}`)
+    }
   }
 
   //component html
   return (
      <main>
       <div className="container-fluid px-7">
+        <div></div>
         <h1><strong>{displayBook.toUpperCase()} {displayChapter}</strong></h1>
         <ol>
           {displayText.map((text, index) => (
