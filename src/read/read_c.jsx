@@ -6,7 +6,7 @@ export function Read_c(props) {
   const [displayChapter, setDisplayChapter] = React.useState('');
   const [displayBook, setDisplayBook] = React.useState('');
   const userName = props.userName;
-  const [modalDisplay, setModalDisplay] = React.useState('');
+  const [isVisible, setIsVisible] = React.useState(false);
   const [modalMessage, setModalMessage] = React.useState('');
 
   //reformats api return object to be just verses
@@ -235,7 +235,7 @@ export function Read_c(props) {
 
     if (response.status === 201) {
       const data = await response.json()
-      setModalDisplay("block")
+      setIsVisible(true)
       setModalMessage(`${data.message} ${data.streak}`)
     }
   }
@@ -244,7 +244,22 @@ export function Read_c(props) {
   return (
      <main>
       <div className="container-fluid px-7">
-        <div></div>
+        <div class="modal" style={{display: isVisible ? 'block' : 'none' }} tabindex="-1">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Message</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <p>{modalMessage}</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
         <h1><strong>{displayBook.toUpperCase()} {displayChapter}</strong></h1>
         <ol>
           {displayText.map((text, index) => (
