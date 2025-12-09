@@ -27,6 +27,7 @@ function getUserByToken(token) {
 
 async function addUser(user) {
   await userCollection.insertOne(user);
+  await
 }
 
 async function updateUser(user) {
@@ -46,7 +47,8 @@ async function updateStreak(email, streak) {
 }
 
 async function getStreak(email) {
-  await streakCollection.findOne({ "email": email})
+  let data = await streakCollection.findOne({ "email": email})
+  return data.streak
 }
 
 async function updateTimestamp(email, timestamp) {
@@ -68,6 +70,10 @@ module.exports = {
   getUserByToken,
   addUser,
   updateUser,
-  addstreak,
-  getHighstreaks,
+  addStreak,
+  getHighStreaks,
+  updateTimestamp,
+  getStreak,
+  updateProgress,
+  updateStreak
 };

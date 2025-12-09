@@ -107,6 +107,11 @@ apiRouter.post('/progress', (_req, res) => {
   res.status(201).send({result : "updated"})
 });
 
+apiRouter.get('/streak', (_req, res) => {
+  let streak = DB.getStreak(_req.body.email)
+  res.send({"streak": streak})
+})
+
 apiRouter.post('/streak', (_req, res) => {
   let new_timestamp = Date.now()
   let last_timestamp = 0.00
@@ -180,8 +185,10 @@ async function createUser(email, password) {
     email: email,
     password: passwordHash,
     token: uuid.v4(),
+    timestamp: 0
   };
   await DB.addUser(user);
+  await DB.addStreak({"email": email, "streak": 0})
 
   return user;
 }

@@ -3,34 +3,47 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Alert from 'react-bootstrap/Alert';
 
 export function Leaderboard() {
-  const [scores, setScores] = React.useState([]);
-  const [messageScore, setMessageScore] = React.useState("10");
-  const [messageUserName, setMessageUserName] = React.useState("Samuel");
+  const [streaks, setStreaks] = React.useState([]);
+  const [userStreak, setUserStreak] = React.useState("Loading...")
 
   React.useEffect(() => {
-      const scoresText = localStorage.getItem('scores');
-      if (scoresText) {
-        setScores(JSON.parse(scoresText));
-      }
-    }, []);
+    //get the high streaks for the table
+    fetch('/api/streak')
+    .then((response) => response.json())
+    .then((streaks) => {
+      setStreaks(streaks);
+    });
 
-  const scoreRows = [];
-  if (scores.length) {
-    for (const [i, score] of scores.entries()) {
-      scoreRows.push(
+    //get the user streak
+    fetch("https://startup.dailybread.click/api/streak", {
+      method: 'get', 
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        email: userName
+    })})
+    .then((response) => response.json())
+    .then((data) => {
+      setUserStreak(data.streak)
+    })
+  }, []);
+
+  const streakRows = [];
+  if (streaks.length) {
+    for (const [i, streak] of streaks.entries()) {
+      streakRows.push(
         <tr key={i}>
           <td>{i}</td>
-          <td>{score.name.split('@')[0]}</td>
-          <td>{score.xp}</td>
-          <td>{score.streak}</td>
-          <td>{score.date}</td>
+          <td>{streak.name.split('@')[0]}</td>
+          <td>{streak.streak}</td>
         </tr>
       );
     }
   } else {
-    scoreRows.push(
+    streakRows.push(
       <tr key='0'>
-        <td colSpan='4'>Be the first to score</td>
+        <td colSpan='4'>Be the first to build your streak</td>
       </tr>
     );
   }
@@ -38,20 +51,17 @@ export function Leaderboard() {
   return (
     <main>
     <div className="container-fluid">
-    <br />
-    <Alert variant="warning" className="mx-auto text-center">User, you are {messageScore}XP from overtaking {messageUserName}!</Alert>
-    <br />
+
+    <h3>Your streak is: {userStreak}</h3>
       <table className="table">
         <thead>
           <tr>
             <th>#</th>
             <th>Name</th>
-            <th>XP</th>
             <th>Streak</th>
-            <th>Date</th>
           </tr>
         </thead>
-        <tbody> {scoreRows} </tbody>
+        <tbody> {streakRows} </tbody>
       </table>
       </div>
     </main>
