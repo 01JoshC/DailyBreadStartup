@@ -11,7 +11,7 @@ const authCookieName = 'token';
 
 // The scores and users are saved in memory and disappear whenever the service is restarted.
 let users = [];
-let scores = [];
+//let scores = [];
 
 // The service port. In production the front-end code is statically hosted by the service on the same port.
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
@@ -80,16 +80,10 @@ const verifyAuth = async (req, res, next) => {
   }
 };
 
-// GetScores
-apiRouter.get('/scores', verifyAuth, async (_req, res) => {
-  const scores = await DB.getHighScores(); //not sure suere this getHighScores function is yet
-  res.send(scores);
-});
-
-// SubmitScore
-apiRouter.post('/score', verifyAuth, (req, res) => {
-  scores = updateScores(req.body);
-  res.send(scores);
+// Get High Streaks
+apiRouter.get('/streaks', verifyAuth, async (_req, res) => {
+  const streaks = await DB.getHighStreaks(); //not sure suere this getHighScores function is yet
+  res.send(streaks);
 });
 
 apiRouter.get('/progress', (_req, res) => {
@@ -107,8 +101,8 @@ apiRouter.post('/progress', (_req, res) => {
   res.status(201).send({result : "updated"})
 });
 
-apiRouter.get('/streak', (_req, res) => {
-  let streak = DB.getStreak(_req.body.email)
+apiRouter.get('/streak', verifyAuth, async (_req, res) => {
+  let streak = await DB.getStreak(_req.body.email)
   res.send({"streak": streak})
 })
 
@@ -156,28 +150,6 @@ app.use((_req, res) => {
   res.sendFile('index.html', { root: 'public' });
 });
 
-// updateScores considers a new score for inclusion in the high scores.
-function updateScores(newScore) {
-  let found = false;
-  for (const [i, prevScore] of scores.entries()) {
-    if (newScore.score > prevScore.score) {
-      scores.splice(i, 0, newScore);
-      found = true;
-      break;
-    }
-  }
-
-  if (!found) {
-    scores.push(newScore);
-  }
-
-  if (scores.length > 10) {
-    scores.length = 10;
-  }
-
-  return scores;
-}
-
 async function createUser(email, password) {
   const passwordHash = await bcrypt.hash(password, 10);
 
@@ -185,7 +157,9 @@ async function createUser(email, password) {
     email: email,
     password: passwordHash,
     token: uuid.v4(),
-    timestamp: 0
+    timestamp: 0, 
+    book: "genesis",
+    chapter: 1
   };
   await DB.addUser(user);
   await DB.addStreak({"email": email, "streak": 0})
@@ -195,7 +169,6 @@ async function createUser(email, password) {
 
 async function findUser(field, value) {
   if (!value) return null;
-
   return users.find((u) => u[field] === value);
 }
 

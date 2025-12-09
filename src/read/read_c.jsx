@@ -26,8 +26,8 @@ export function Read_c(props) {
   }
 
   React.useEffect(() => {
-
-    fetch("https://startup.dailybread.click/api/progress", {
+    //fetch("https://startup.dailybread.click/api/progress", {
+    fetch("localhost:4000/api/progress", {
       method: 'get', 
       headers: {
         "Content-Type": "application/json"
@@ -204,7 +204,8 @@ export function Read_c(props) {
     
     getText(displayBook, displayChapter)
 
-    fetch("https://startup.dailybread.click/api/progress", {
+    //fetch("https://startup.dailybread.click/api/progress", {
+    fetch("localhost:4000/api/progress", {
       method: 'post', 
       headers: {
         "Content-Type": "application/json"

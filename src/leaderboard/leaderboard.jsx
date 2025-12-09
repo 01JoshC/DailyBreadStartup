@@ -8,14 +8,15 @@ export function Leaderboard() {
 
   React.useEffect(() => {
     //get the high streaks for the table
-    fetch('/api/streak')
+    fetch('/api/highStreaks')
     .then((response) => response.json())
     .then((streaks) => {
       setStreaks(streaks);
     });
 
     //get the user streak
-    fetch("https://startup.dailybread.click/api/streak", {
+    //fetch("https://startup.dailybread.click/api/streak", {
+    fetch("localhost:4000/api/streak/", {
       method: 'get', 
       headers: {
         "Content-Type": "application/json"

@@ -27,7 +27,6 @@ function getUserByToken(token) {
 
 async function addUser(user) {
   await userCollection.insertOne(user);
-  await
 }
 
 async function updateUser(user) {
@@ -56,12 +55,11 @@ async function updateTimestamp(email, timestamp) {
 }
 
 function getHighStreaks() {
-  const query = { streak: { $gt: 0, $lt: 900 } };
   const options = {
     sort: { streak: -1 },
     limit: 15,
   };
-  const cursor = streakCollection.find(query, options);
+  const cursor = streakCollection.find({}, options);
   return cursor.toArray();
 }
 
