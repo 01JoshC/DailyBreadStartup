@@ -26,7 +26,15 @@ export function Read_c(props) {
   }
 
   React.useEffect(() => {
-    fetch("https://startup.dailybread.click/api/progress")    
+
+    fetch("https://startup.dailybread.click/api/progress", {
+      method: 'get', 
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        email: userName
+      })})
     .then((response) => response.json())
     .then((data) => {
       setDisplayBook(data["book"])

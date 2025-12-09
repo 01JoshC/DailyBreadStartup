@@ -4,6 +4,7 @@ const express = require('express');
 const uuid = require('uuid');
 const app = express();
 const cors = require('cors');
+const DB = require('./database.js');
 const { peerProxy } = require('./peerProxy.js');
 
 const authCookieName = 'token';
@@ -11,8 +12,6 @@ const authCookieName = 'token';
 // The scores and users are saved in memory and disappear whenever the service is restarted.
 let users = [];
 let scores = [];
-let curr_book = "exodus";
-let curr_chapter = 22;
 
 // The service port. In production the front-end code is statically hosted by the service on the same port.
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
@@ -51,6 +50,7 @@ apiRouter.post('/auth/login', async (req, res) => {
   if (user) {
     if (await bcrypt.compare(req.body.password, user.password)) {
       user.token = uuid.v4();
+      await DB.updateUser(user);
       setAuthCookie(res, user.token);
       res.send({ email: user.email });
       return;
@@ -64,6 +64,7 @@ apiRouter.delete('/auth/logout', async (req, res) => {
   const user = await findUser('token', req.cookies[authCookieName]);
   if (user) {
     delete user.token;
+    DB.updateUser(user);
   }
   res.clearCookie(authCookieName);
   res.status(204).end();
@@ -80,7 +81,8 @@ const verifyAuth = async (req, res, next) => {
 };
 
 // GetScores
-apiRouter.get('/scores', verifyAuth, (_req, res) => {
+apiRouter.get('/scores', verifyAuth, async (_req, res) => {
+  const scores = await DB.getHighScores(); //not sure suere this getHighScores function is yet
   res.send(scores);
 });
 
@@ -91,13 +93,53 @@ apiRouter.post('/score', verifyAuth, (req, res) => {
 });
 
 apiRouter.get('/progress', (_req, res) => {
-  res.send({book: curr_book, chapter: curr_chapter});
+  let curr_book = "";
+  let curr_chapter = 0;
+  DB.getUser(_req.body.email).then((user) => {
+    curr_book = user.book;
+    curr_chapter = user.chapter;
+    res.send({book: curr_book, chapter: curr_chapter});
+  });
 });
 
 apiRouter.post('/progress', (_req, res) => {
-  curr_chapter = _req.body.chapter;
-  curr_book = _req.body.book;
+  DB.updateProgress(_req.body.email, _req.body.book, _req.body.chapter)
   res.status(201).send({result : "updated"})
+});
+
+apiRouter.post('/streak', (_req, res) =>{
+  let new_timestamp = Date.now()
+  let last_timestamp = 0.00
+
+  DB.getUser(_req.body.email).then((user) => {
+    last_timestamp = user.timestamp
+
+    //checking same day
+    if (new_timestamp.toDateString() === last_timestamp.toDateString()){
+      return
+    }
+
+    last_timestamp += 86400000
+
+    //checking for next day
+    if (new_timestamp.toDateString() === last_timestamp.toDateString()){
+      
+    }
+
+    let last_year = last_timestamp.getFullYear()
+    let last_month = last_timestamp.getMonth()
+    let last_date = last_timestamp.getDate()
+
+    let new_year = new_timestamp.getFullYear()
+    let new_month = new_timestamp.getMonth()
+    let new_date = new_timestamp.getDate()
+
+
+
+
+  
+
+  })
 });
 
 // Default error handler
@@ -140,7 +182,7 @@ async function createUser(email, password) {
     password: passwordHash,
     token: uuid.v4(),
   };
-  users.push(user);
+  await DB.addUser(user);
 
   return user;
 }
