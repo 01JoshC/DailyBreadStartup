@@ -28,15 +28,10 @@ export function Read_c(props) {
   }
 
   React.useEffect(() => {
+  const params = new URLSearchParams({email: userName})
+
     //fetch("https://startup.dailybread.click/api/progress", {
-    fetch("localhost:4000/api/progress", {
-      method: 'get', 
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        email: userName
-      })})
+    fetch(`http://localhost:4000/api/progress?${params}`)
     .then((response) => response.json())
     .then((data) => {
       setDisplayBook(data["book"])
@@ -208,7 +203,7 @@ export function Read_c(props) {
     getText(displayBook, displayChapter)
 
     //fetch("https://startup.dailybread.click/api/progress", {
-    fetch("localhost:4000/api/progress", {
+    fetch("http://localhost:4000/api/progress", {
       method: 'post', 
       headers: {
         "Content-Type": "application/json"
@@ -224,7 +219,7 @@ export function Read_c(props) {
       GameNotifier.broadcastEvent(userName, GameEvent.Finished, `${displayBook} ${displayChapter}`);
     })
 
-    const response = await fetch("localhost:4000/api/streak", {
+    const response = await fetch("http://localhost:4000/api/streak", {
       method: 'post', 
       headers: {
         "Content-Type": "application/json"
@@ -244,18 +239,18 @@ export function Read_c(props) {
   return (
      <main>
       <div className="container-fluid px-7">
-        <div class="modal" style={{display: isVisible ? 'block' : 'none' }} tabindex="-1">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title">Message</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div className="modal" style={{display: isVisible ? 'block' : 'none' }} tabIndex="-1">
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">Message</h5>
+                <button onClick={() => setIsVisible(false)} type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
-              <div class="modal-body">
+              <div className="modal-body">
                 <p>{modalMessage}</p>
               </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <div className="modal-footer">
+                <button onClick={() => setIsVisible(false)} type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
               </div>
             </div>
           </div>
@@ -267,7 +262,7 @@ export function Read_c(props) {
           ))}
         </ol>
       </div>
-    <button type="button" class="btn btn-secondary" onClick={() => increment()}>Next Chapter &#10145;</button>
+    <button type="button" className="btn btn-secondary" onClick={() => increment()}>Next Chapter &#10145;</button>
     </main>
   );
 }

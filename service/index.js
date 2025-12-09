@@ -87,11 +87,9 @@ apiRouter.get('/streaks', verifyAuth, async (_req, res) => {
 });
 
 apiRouter.get('/progress', (_req, res) => {
-  let curr_book = "";
-  let curr_chapter = 0;
-  DB.getUser(_req.body.email).then((user) => {
-    curr_book = user.book;
-    curr_chapter = user.chapter;
+  DB.getUser(_req.query.email).then((user) => {
+    let curr_book = user.book;
+    let curr_chapter = user.chapter;
     res.send({book: curr_book, chapter: curr_chapter});
   });
 });
@@ -107,7 +105,7 @@ apiRouter.get('/streak', verifyAuth, async (_req, res) => {
 })
 
 apiRouter.post('/streak', (_req, res) => {
-  let new_timestamp = Date.now()
+  let new_timestamp = new Date(Date.now())
   let last_timestamp = 0.00
 
   DB.getUser(_req.body.email).then((user) => {
@@ -116,13 +114,15 @@ apiRouter.post('/streak', (_req, res) => {
     
     //checks for new users
     if (user.timestamp == 0) {
-      DB.updateScores(_req.body.email, 1)
-      res.status(200).send({"message" : "Congratulations! Keep reading." , "streak" : 1})
+      DB.updateStreak(_req.body.email, 1)
+      res.status(201).send({"message" : "Congratulations! Keep reading." , "streak" : 1})
+      return
     }
 
     //checking same day
     if (new_timestamp.toDateString() === last_timestamp.toDateString()){
       res.status(200).send({"message" : "You're just trying to flex now, aren't you?" , "streak" : null})
+      return
     }
 
     last_timestamp += 86400000
@@ -131,10 +131,10 @@ apiRouter.post('/streak', (_req, res) => {
     if (new_timestamp.toDateString() === last_timestamp.toDateString()){
       let curr_streak = DB.getStreak(_req.body.email)
       let new_streak = curr_streak + 1
-      DB.updateScores(_req.body.email, new_streak)
+      DB.updateStreak(_req.body.email, new_streak)
       res.status(201).send({"message" : "Congrats! Your new streak is: " , "streak" : new_streak})
     } else {
-      DB.updateScores(_req.body.email, 1)
+      DB.updateStreak(_req.body.email, 1)
       res.status(201).send({"message" : "Never too late to start!" , "streak" : 1})
     }
   })
@@ -169,7 +169,11 @@ async function createUser(email, password) {
 
 async function findUser(field, value) {
   if (!value) return null;
-  return users.find((u) => u[field] === value);
+
+  if (field === 'token') {
+    return DB.getUserByToken(value);
+  }
+  return DB.getUser(value);
 }
 
 // setAuthCookie in the HTTP response

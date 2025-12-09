@@ -1,10 +1,11 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Alert from 'react-bootstrap/Alert';
 
-export function Leaderboard() {
+
+export function Leaderboard(props) {
   const [streaks, setStreaks] = React.useState([]);
-  const [userStreak, setUserStreak] = React.useState("Loading...")
+  const [userStreak, setUserStreak] = React.useState("loading...")
+  const userName = props.userName;
 
   React.useEffect(() => {
     //get the high streaks for the table
@@ -15,15 +16,9 @@ export function Leaderboard() {
     });
 
     //get the user streak
+    const params = new URLSearchParams({email: userName})
     //fetch("https://startup.dailybread.click/api/streak", {
-    fetch("localhost:4000/api/streak/", {
-      method: 'get', 
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        email: userName
-    })})
+    fetch(`http://localhost:4000/api/streak/?${params}`)
     .then((response) => response.json())
     .then((data) => {
       setUserStreak(data.streak)
