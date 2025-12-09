@@ -107,38 +107,37 @@ apiRouter.post('/progress', (_req, res) => {
   res.status(201).send({result : "updated"})
 });
 
-apiRouter.post('/streak', (_req, res) =>{
+apiRouter.post('/streak', (_req, res) => {
   let new_timestamp = Date.now()
   let last_timestamp = 0.00
 
   DB.getUser(_req.body.email).then((user) => {
     last_timestamp = user.timestamp
+    DB.updateTimestamp(_req.body.email, new_timestamp)
+    
+    //checks for new users
+    if (user.timestamp == 0) {
+      DB.updateScores(_req.body.email, 1)
+      res.status(200).send({"message" : "Congratulations! Keep reading." , "streak" : 1})
+    }
 
     //checking same day
     if (new_timestamp.toDateString() === last_timestamp.toDateString()){
-      return
+      res.status(200).send({"message" : "You're just trying to flex now, aren't you?" , "streak" : null})
     }
 
     last_timestamp += 86400000
 
     //checking for next day
     if (new_timestamp.toDateString() === last_timestamp.toDateString()){
-      
+      let curr_streak = DB.getStreak(_req.body.email)
+      let new_streak = curr_streak + 1
+      DB.updateScores(_req.body.email, new_streak)
+      res.status(201).send({"message" : "Congrats! Your new streak is: " , "streak" : new_streak})
+    } else {
+      DB.updateScores(_req.body.email, 1)
+      res.status(201).send({"message" : "Never too late to start!" , "streak" : 1})
     }
-
-    let last_year = last_timestamp.getFullYear()
-    let last_month = last_timestamp.getMonth()
-    let last_date = last_timestamp.getDate()
-
-    let new_year = new_timestamp.getFullYear()
-    let new_month = new_timestamp.getMonth()
-    let new_date = new_timestamp.getDate()
-
-
-
-
-  
-
   })
 });
 

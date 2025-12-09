@@ -40,6 +40,17 @@ async function updateProgress(email, book, chapter) {
   await userCollection.updateOne({ "email": email}, { $set: {"book" : book, "chapter": chapter}})
 }
 
+async function updateStreak(email, score) {
+  await scoreCollection.updateOne({"email": email}, {$set: {"score": score}})
+}
+
+async function getStreak(email, score) {
+  await scoreCollection.findOne({"email": email})
+}
+
+async function updateTimestamp(email, timestamp) {
+  await userCollection.updateOne({ "email": email}, { $set: {"timestamp" : timestamp}})
+}
 
 function getHighScores() {
   const query = { score: { $gt: 0, $lt: 900 } };
