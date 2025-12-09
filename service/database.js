@@ -4,6 +4,7 @@ const url = `mongodb+srv://${config.userName}:${config.password}@${config.hostna
 const client = new MongoClient(url);
 const db = client.db('dailybread');
 const userCollection = db.collection('user');
+const streakCollection = db.collection('streak');
 
 // This will asynchronously test the connection and exit the process if it fails
 (async function testConnection() {
@@ -32,33 +33,33 @@ async function updateUser(user) {
   await userCollection.updateOne({ email: user.email }, { $set: user });
 }
 
-async function addScore(score) {
-  return scoreCollection.insertOne(score);
+async function addStreak(streak) {
+  return streakCollection.insertOne(streak);
 }
 
 async function updateProgress(email, book, chapter) {
-  await userCollection.updateOne({ "email": email}, { $set: {"book" : book, "chapter": chapter}})
+  await userCollection.updateOne({ "email": email}, { $set: {"book": book, "chapter": chapter}})
 }
 
-async function updateStreak(email, score) {
-  await scoreCollection.updateOne({"email": email}, {$set: {"score": score}})
+async function updateStreak(email, streak) {
+  await streakCollection.updateOne({ "email": email}, { $set: {"streak": streak}})
 }
 
-async function getStreak(email, score) {
-  await scoreCollection.findOne({"email": email})
+async function getStreak(email) {
+  await streakCollection.findOne({ "email": email})
 }
 
 async function updateTimestamp(email, timestamp) {
-  await userCollection.updateOne({ "email": email}, { $set: {"timestamp" : timestamp}})
+  await userCollection.updateOne({ "email": email}, { $set: {"timestamp": timestamp}})
 }
 
-function getHighScores() {
-  const query = { score: { $gt: 0, $lt: 900 } };
+function getHighStreaks() {
+  const query = { streak: { $gt: 0, $lt: 900 } };
   const options = {
-    sort: { score: -1 },
+    sort: { streak: -1 },
     limit: 15,
   };
-  const cursor = scoreCollection.find(query, options);
+  const cursor = streakCollection.find(query, options);
   return cursor.toArray();
 }
 
@@ -67,6 +68,6 @@ module.exports = {
   getUserByToken,
   addUser,
   updateUser,
-  addScore,
-  getHighScores,
+  addstreak,
+  getHighstreaks,
 };
