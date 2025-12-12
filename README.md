@@ -76,6 +76,9 @@ For this deliverable I properly styled the application into its final appearance
 - [x] **WebSocket data displayed in the application interface** The frontend displays notification messages received over the WebSocket connection.
 - [x] **The application is fully functional. There are no mocks or placeholder features.** The application is fully functional with all features implemented. 
 
+## Database deliverable
+- [x] **Stores and retrieves credentials in MongoDB** I have deployed a MongoDB database and my service can connect to it for user authentication. 
+- [x] **Stores application data in MongoDB** My database supports user authentication, progress tracking, and streak count. All functionality that requires persistent data is stored in MongoDB.
 
 
 

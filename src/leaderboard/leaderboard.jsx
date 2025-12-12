@@ -9,7 +9,7 @@ export function Leaderboard(props) {
 
   React.useEffect(() => {
     //get the high streaks for the table
-    fetch('http://localhost:4000/api/streaks')
+    fetch('https://startup.dailybread.click/api/streaks')
     .then((response) => response.json())
     .then((db_streaks) => {
       setStreaks(db_streaks);
@@ -18,7 +18,7 @@ export function Leaderboard(props) {
     //get the user streak
     const params = new URLSearchParams({email: userName})
     //fetch("https://startup.dailybread.click/api/streak", {
-    fetch(`http://localhost:4000/api/streak/?${params}`)
+    fetch(`https://startup.dailybread.click/api/streak/?${params}`)
     .then((response) => response.json())
     .then((data) => {
       setUserStreak(data.streak)

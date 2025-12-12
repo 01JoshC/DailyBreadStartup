@@ -31,7 +31,7 @@ export function Read_c(props) {
   const params = new URLSearchParams({email: userName})
 
     //fetch("https://startup.dailybread.click/api/progress", {
-    fetch(`http://localhost:4000/api/progress?${params}`)
+    fetch(`https://startup.dailybread.click/api/progress?${params}`)
     .then((response) => response.json())
     .then((data) => {
       setDisplayBook(data["book"])
@@ -203,7 +203,7 @@ export function Read_c(props) {
     getText(displayBook, displayChapter)
 
     //fetch("https://startup.dailybread.click/api/progress", {
-    fetch("http://localhost:4000/api/progress", {
+    fetch("https://startup.dailybread.click/api/progress", {
       method: 'post', 
       headers: {
         "Content-Type": "application/json"
@@ -219,7 +219,7 @@ export function Read_c(props) {
       GameNotifier.broadcastEvent(userName, GameEvent.Finished, `${displayBook} ${displayChapter}`);
     })
 
-    const response = await fetch("http://localhost:4000/api/streak", {
+    const response = await fetch("https://startup.dailybread.click/api/streak", {
       method: 'post', 
       headers: {
         "Content-Type": "application/json"
